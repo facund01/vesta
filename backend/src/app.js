@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import { errorHandler, notFound } from './middlewares/errorMiddleware.js'
 
 const app = express()
 
@@ -23,5 +24,9 @@ app.get('/api/v1/health', (req, res) => {
         environment: process.env.NODE_ENV,
     })
 })
+
+// middlewares globales de error
+app.use(notFound)
+app.use(errorHandler)
 
 export default app
