@@ -24,14 +24,13 @@ const categorySchema = new mongoose.Schema(
 )
 
 // generar slug antes de validar/guardar (ej: "Locales Comerciales" -> "locales-comerciales")
-categorySchema.pre('save', function (next) {
+categorySchema.pre('save', function () {
   if (this.isModified('nombre')) {
     this.slug = this.nombre
       .toLowerCase()
       .trim()
       .replace(/[\s\W-]+/g, '-');
   }
-  next()
 })
 
 export default mongoose.model('Category', categorySchema)

@@ -24,3 +24,93 @@ export const updateProfileValidator = [
     .isLength({ min: 6 })
     .withMessage('La nueva contraseña debe tener al menos 6 caracteres'),
 ]
+
+export const categoryValidator = [
+  body('nombre')
+    .trim()
+    .notEmpty()
+    .withMessage('El nombre de la categoría es obligatorio')
+    .isLength({ min: 3 })
+    .withMessage('El nombre debe tener al menos 3 caracteres'),
+  body('descripcion')
+    .optional()
+    .trim()
+    .isLength({ max: 250 })
+    .withMessage('La descripción no puede superar los 250 caracteres'),
+]
+
+export const propertyValidator = [
+  body('titulo')
+    .trim()
+    .notEmpty()
+    .withMessage('El título es obligatorio')
+    .isLength({ min: 5 })
+    .withMessage('El título debe tener al menos 5 caracteres'),
+  body('direccion')
+    .trim()
+    .notEmpty()
+    .withMessage('La dirección es obligatoria'),
+  body('categoria')
+    .notEmpty()
+    .withMessage('La categoría es obligatoria')
+    .isMongoId()
+    .withMessage('El ID de categoría no es válido'),
+  body('descripcion')
+    .trim()
+    .notEmpty()
+    .withMessage('La descripción es obligatoria')
+    .isLength({ min: 10 })
+    .withMessage('La descripción debe tener al menos 10 caracteres'),
+  body('precio')
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('El precio debe ser un número mayor o igual a 0'),
+  body('moneda')
+    .optional()
+    .isIn(['USD', 'ARS'])
+    .withMessage('La moneda debe ser USD o ARS'),
+  body('tipoOperacion')
+    .optional()
+    .isIn(['Venta', 'Alquiler', 'Alquiler Temporal'])
+    .withMessage('Tipo de operación inválido'),
+  body('imagenes')
+    .isArray({ min: 1 })
+    .withMessage('Debe incluir un arreglo con al menos una URL de imagen'),
+  body('estado')
+    .optional()
+    .isIn(['Disponible', 'Reservado', 'Alquilado', 'Vendido'])
+    .withMessage('Estado de disponibilidad inválido'),
+]
+
+export const companyValidator = [
+  body('nombreComercio')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('El nombre del comercio no puede estar vacío'),
+  body('descripcion')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('La descripción no puede estar vacía'),
+  body('direccion')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('La dirección no puede estar vacía'),
+  body('telefono')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('El teléfono no puede estar vacío'),
+  body('email')
+    .optional()
+    .isEmail()
+    .withMessage('El email de contacto debe ser válido')
+    .normalizeEmail(),
+  body('horariosAtencion')
+    .optional()
+    .trim()
+    .notEmpty()
+    .withMessage('Los horarios de atención no pueden estar vacíos')
+]
