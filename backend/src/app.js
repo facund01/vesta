@@ -4,6 +4,8 @@ import authRoutes from './routes/authRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js'
 import propertyRoutes from './routes/propertyRoutes.js'
 import companyRoutes from './routes/companyRoutes.js'
+import inquiryRoutes from './routes/inquiryRoutes.js'
+import statsRoutes from './routes/statsRoutes.js'
 import { errorHandler, notFound } from './middlewares/errorMiddleware.js'
 
 const app = express()
@@ -34,6 +36,8 @@ app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/categories', categoryRoutes)
 app.use('/api/v1/properties', propertyRoutes)
 app.use('/api/v1/company', companyRoutes)
+app.use('/api/v1/inquiries', inquiryRoutes)
+app.use('/api/v1/stats', statsRoutes)
 
 // middlewares globales de error
 app.use(notFound)

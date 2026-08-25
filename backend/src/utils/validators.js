@@ -114,3 +114,37 @@ export const companyValidator = [
     .notEmpty()
     .withMessage('Los horarios de atención no pueden estar vacíos')
 ]
+
+export const inquiryValidator = [
+  body('nombre')
+    .trim()
+    .notEmpty()
+    .withMessage('El nombre es obligatorio'),
+  body('email')
+    .isEmail()
+    .withMessage('Ingrese un correo electrónico válido')
+    .normalizeEmail(),
+  body('telefono')
+    .optional()
+    .trim(),
+  body('asunto')
+    .trim()
+    .notEmpty()
+    .withMessage('El asunto es obligatorio'),
+  body('mensaje')
+    .trim()
+    .notEmpty()
+    .withMessage('El mensaje es obligatorio')
+    .isLength({ min: 10 })
+    .withMessage('El mensaje debe tener al menos 10 caracteres'),
+  body('propiedad')
+    .optional({ values: 'null' })
+    .isMongoId()
+    .withMessage('El ID de propiedad no es válido')
+]
+
+export const updateInquiryStatusValidator = [
+  body('estado')
+    .isIn(['Pendiente', 'Leída', 'Respondida'])
+    .withMessage('El estado debe ser Pendiente, Leída o Respondida')
+]
