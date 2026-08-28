@@ -1,5 +1,7 @@
 import Inquiry from '../models/Inquiry.js'
 import Property from '../models/Property.js'
+import CompanyInfo from '../models/CompanyInfo.js'
+import { sendEmail } from '../utils/sendEmail.js'
 
 // @desc    enviar una consulta desde el sitio publico
 // @route   POST /api/v1/inquiries
@@ -8,10 +10,10 @@ export const createInquiry = async (req, res, next) => {
   try {
     const { nombre, email, telefono, asunto, mensaje, propiedad } = req.body
 
-    // si viene asociada a una propiedad, validar que exista
+    let propertyData = null
     if (propiedad) {
-      const propertyExists = await Property.findById(propiedad)
-      if (!propertyExists) {
+      propertyData = await Property.findById(propiedad)
+      if (!propertyData) {
         return res.status(400).json({
           success: false,
           message: 'La propiedad por la que consulta no existe'
@@ -27,6 +29,30 @@ export const createInquiry = async (req, res, next) => {
       mensaje,
       propiedad: propiedad || null
     })
+
+    // enviar notificacion por email al admin
+    try {
+      const company = await CompanyInfo.findOne()
+      const adminEmail = company?.email || process.env.FROM_EMAIL
+
+      const emailHtml = `
+        <h2>Nueva consulta recibida en Vesta Propiedades</h2>
+        <p><strong>Remitente:</strong> ${nombre} (${email} - Tel: ${telefono || 'No especificado'})</p>
+        <p><strong>Asunto:</strong> ${asunto}</p>
+        ${propertyData ? `<p><strong>Propiedad:</strong> ${propertyData.titulo} (${propertyData.direccion})</p>` : ''}
+        <p><strong>Mensaje:</strong></p>
+        <blockquote style="background: #f9f9f9; padding: 10px; border-left: 4px solid #333;">${mensaje}</blockquote>
+      `
+
+      await sendEmail({
+        email: adminEmail,
+        subject: `Nueva Consulta Web: ${asunto}`,
+        message: `Nueva consulta de ${nombre} (${email}): ${mensaje}`,
+        html: emailHtml
+      })
+    } catch (mailError) {
+      console.error('No se pudo enviar el correo de aviso:', mailError.message)
+    }
 
     res.status(201).json({
       success: true,

@@ -148,3 +148,13 @@ export const updateInquiryStatusValidator = [
     .isIn(['Pendiente', 'Leída', 'Respondida'])
     .withMessage('El estado debe ser Pendiente, Leída o Respondida')
 ]
+
+export const forgotPasswordValidator = [
+  body('email').isEmail().withMessage('Ingrese un email válido').normalizeEmail()
+]
+
+export const resetPasswordValidator = [
+  body('password')
+    .isLength({ min: 6 })
+    .withMessage('La nueva contraseña debe tener al menos 6 caracteres')
+]
