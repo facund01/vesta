@@ -34,8 +34,8 @@ const inquirySchema = new mongoose.Schema(
     },
     estado: {
       type: String,
-      enum: ['Pendiente', 'Leída', 'Respondida'],
-      default: 'Pendiente',
+      enum: ['Pendiente', 'Leída', 'Leida', 'Respondida'],
+      default: 'Pendiente'
     },
   },
   {

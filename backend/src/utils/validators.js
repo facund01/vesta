@@ -145,7 +145,8 @@ export const inquiryValidator = [
 
 export const updateInquiryStatusValidator = [
   body('estado')
-    .isIn(['Pendiente', 'Leída', 'Respondida'])
+    .trim()
+    .isIn(['Pendiente', 'Leída', 'Leida', 'Respondida'])
     .withMessage('El estado debe ser Pendiente, Leída o Respondida')
 ]
 
