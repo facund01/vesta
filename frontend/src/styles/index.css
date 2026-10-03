@@ -1,0 +1,479 @@
+:root {
+  --primary: #1e293b;
+  --primary-hover: #0f172a;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --bg-light: #f8fafc;
+  --card-bg: #ffffff;
+  --text-main: #334155;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --danger: #ef4444;
+  --success: #10b981;
+  --warning: #f59e0b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-main);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+input, select, textarea {
+  font-family: inherit;
+}
+
+/* Select moderno personalizado */
+.custom-select {
+  width: 100%;
+  padding: 0.85rem 2.6rem 0.85rem 2.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: #1e293b;
+  background-color: #f8fafc;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  
+  /* Quita la flecha y marco nativo del sistema operativo */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Flecha SVG sutil integrada */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+}
+
+.custom-select:hover {
+  border-color: #94a3b8;
+  background-color: #ffffff;
+}
+
+.custom-select:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* ===================================================
+   REGLAS GLOBALES RESPONSIVE
+   =================================================== */
+
+/* Ajuste general para evitar scroll horizontal indeseado */
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Clases de utilidad para layouts adaptables */
+.container-responsive {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+}
+
+/* Grilla adaptable de tarjetas de propiedades */
+.properties-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Formulario buscador del Hero */
+.hero-search-form {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+/* Layout del Catálogo (Filtros + Resultados) */
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* Layout de Ficha de Detalle (Galería/Info + Formulario lateral) */
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ===================================================
+   MEDIA QUERIES (PANTALLAS MEDIANAS Y MÓVILES)
+   =================================================== */
+
+/* Tablets y pantallas intermedias (<= 992px) */
+@media (max-width: 992px) {
+  .catalog-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-sticky-form {
+    position: static !important;
+    width: 100%;
+  }
+}
+
+/* Móviles (<= 768px) */
+@media (max-width: 768px) {
+  /* Navbar */
+  .navbar-container {
+    padding: 0.75rem 1rem !important;
+  }
+
+  .navbar-nav-links {
+    gap: 1rem !important;
+  }
+
+  /* Hero */
+  .hero-section {
+    padding: 2.5rem 1rem !important;
+    min-height: auto !important;
+  }
+
+  .hero-title {
+    font-size: 1.75rem !important;
+  }
+
+  .hero-subtitle {
+    font-size: 0.95rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .hero-search-form {
+    flex-direction: column !important;
+  }
+
+  .hero-search-form > div,
+  .hero-search-form > button {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+  }
+
+  /* Detalle de propiedad */
+  .detail-metrics-box {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    text-align: left !important;
+  }
+
+  .detail-metrics-box > div {
+    border-left: none !important;
+    padding-left: 0 !important;
+  }
+
+  .detail-main-img {
+    height: 260px !important;
+  }
+}
+
+/* ===================================================
+   ADMIN PANEL RESPONSIVE
+   =================================================== */
+
+.admin-layout-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f8fafc;
+  position: relative;
+}
+
+/* Sidebar en Desktop */
+.admin-sidebar {
+  width: 260px;
+  background-color: #0f172a;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  border-right: 1px solid #1e293b;
+  flex-shrink: 0;
+  transition: transform 0.3s ease-in-out;
+  z-index: 100;
+}
+
+/* Contenido dinámico */
+.admin-main-content {
+  flex: 1;
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+  min-width: 0; /* Previene desbordamiento en flexbox */
+}
+
+/* Barra superior móvil (oculta en escritorio) */
+.admin-mobile-header {
+  display: none;
+  background-color: #0f172a;
+  color: #ffffff;
+  padding: 0.85rem 1.25rem;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #1e293b;
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+/* Fondo oscurecido para cerrar el menú en móvil */
+.admin-backdrop {
+  display: none;
+}
+
+/* Reglas móviles para el panel (<= 992px) */
+@media (max-width: 992px) {
+  .admin-layout-container {
+    flex-direction: column;
+  }
+
+  .admin-mobile-header {
+    display: flex;
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    transform: translateX(-100%); /* Oculto por defecto */
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+  }
+
+  .admin-sidebar.open {
+    transform: translateX(0); /* Visible al pulsar menú */
+  }
+
+  .admin-backdrop.open {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 95;
+  }
+
+  .admin-main-content {
+    padding: 1.25rem 1rem;
+  }
+}
+
+/* ===================================================
+   UI/UX REFINEMENTS & MICRO-INTERACTIONS
+   =================================================== */
+
+/* Animación suave de entrada de páginas */
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInSlideUp 0.25s ease-out forwards;
+}
+
+/* Efecto hover interactivo para tarjetas de propiedades */
+.property-card {
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.25s ease;
+}
+
+.property-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.1), 0 4px 6px -2px rgba(15, 23, 42, 0.05) !important;
+}
+
+.property-card img {
+  transition: transform 0.4s ease;
+}
+
+.property-card:hover img {
+  transform: scale(1.03);
+}
+
+/* ===================================================
+   EFECTO DE EXPANSIÓN DE COLOR INTERNO (BUTTONS Y LINKS)
+   =================================================== */
+
+button,
+.btn-ripple {
+  position: relative !important;
+  overflow: hidden !important;
+  cursor: pointer;
+  z-index: 1;
+  text-decoration: none;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease !important;
+}
+
+/* Asegura que el texto y los íconos queden siempre al frente */
+button > *,
+.btn-ripple > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Capa de expansión de color/luz interna */
+button::before,
+.btn-ripple::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 140%;
+  padding-bottom: 140%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Expansión al pasar el cursor (Hover) */
+button:hover:not(:disabled)::before,
+.btn-ripple:hover::before {
+  transform: translate(-50%, -50%) scale(1.6);
+  opacity: 1;
+}
+
+/* Efecto al hacer clic sostenido (Active) */
+button:active:not(:disabled)::before,
+.btn-ripple:active::before {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 80%);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+/* Deshabilitados */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+button:disabled::before {
+  display: none;
+}
+
+/* Scrollbar personalizada minimalista */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Estilo para badges con micro-transición */
+.badge-interactive {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.badge-interactive:hover {
+  transform: scale(1.02);
+}
+
+/* ===================================================
+   TRANSICIÓN SUAVE ENTRE PANTALLAS (MÁS LENTA Y FLUIDA)
+   =================================================== */
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition {
+  animation: pageFadeIn 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  width: 100%;
+  will-change: opacity, transform;
+}
+
+/* ===================================================
+   SPINNER DE CARGA ELEGANTE
+   =================================================== */
+
+@keyframes spinLoader {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-loader {
+  width: 44px;
+  height: 44px;
+  border: 3.5px solid #e2e8f0;
+  border-top-color: #2563eb; /* Azul corporativo */
+  border-radius: 50%;
+  animation: spinLoader 0.75s linear infinite;
+}
+
+/* Contenedor que ocupa prácticamente toda la pantalla visible */
+.loading-container {
+  min-height: calc(100vh - 120px); /* 100vh menos el header aproximado */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  width: 100%;
+}

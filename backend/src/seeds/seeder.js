@@ -40,17 +40,17 @@ const importData = async () => {
 
     // 3. Crear Información Institucional
     await CompanyInfo.create({
-      nombreComercio: 'Vesta Inmobiliaria Boutique',
+      nombreComercio: 'Vesta Propiedades',
       descripcion: 'Agencia inmobiliaria especializada en comercialización y gestión de propiedades premium y residenciales en Buenos Aires.',
       direccion: 'Av. Corrientes 1500, Balvanera, CABA',
       telefono: '+54 11 4888-9999',
       email: 'contacto@vesta.com',
       horariosAtencion: 'Lunes a Viernes de 9:00 a 19:00 hs - Sábados de 10:00 a 14:00 hs',
       redesSociales: {
-        instagram: 'https://instagram.com/vestainmobiliaria_ok',
-        facebook: 'https://facebook.com/vestainmobiliaria',
+        instagram: 'https://instagram.com/vestapropiedades_ok',
+        facebook: 'https://facebook.com/vestapropiedades',
         whatsapp: '+54 9 11 4888-9999',
-        linkedin: 'https://linkedin.com/company/vesta-inmobiliaria'
+        linkedin: 'https://linkedin.com/company/vesta-propiedades'
       }
     })
 
