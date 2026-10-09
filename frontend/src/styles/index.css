@@ -213,33 +213,34 @@ img {
 
 .admin-layout-container {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;          /* Fija la altura exacta de la ventana */
+  width: 100vw;           /* Ancho completo */
+  overflow: hidden;       /* Evita scroll global en escritorio */
   background-color: #f8fafc;
-  position: relative;
 }
 
-/* Sidebar en Desktop */
+/* Sidebar fija e independiente en escritorio */
 .admin-sidebar {
   width: 260px;
+  height: 100vh;
   background-color: #0f172a;
-  color: #ffffff;
+  color: #f8fafc;
   display: flex;
   flex-direction: column;
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  border-right: 1px solid #1e293b;
   flex-shrink: 0;
-  transition: transform 0.3s ease-in-out;
-  z-index: 100;
+  position: relative;
+  z-index: 40;
+  overflow-y: auto;       /* Permite scroll interno si el menú es largo */
 }
 
-/* Contenido dinámico */
+/* Contenido principal con su propio scroll en escritorio */
 .admin-main-content {
   flex: 1;
-  padding: 2rem 2.5rem;
-  overflow-y: auto;
-  min-width: 0; /* Previene desbordamiento en flexbox */
+  height: 100vh;          /* Mantiene la altura fija del viewport */
+  overflow-y: auto;       /* Scroll únicamente en el contenido central */
+  padding: 2rem;
+  background-color: #f8fafc;
+  min-width: 0;
 }
 
 /* Barra superior móvil (oculta en escritorio) */
@@ -261,10 +262,13 @@ img {
   display: none;
 }
 
-/* Reglas móviles para el panel (<= 992px) */
+/* REGLAS MÓVILES Y TABLETS (<= 992px) */
 @media (max-width: 992px) {
   .admin-layout-container {
     flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    overflow: visible; /* Restablece el flujo normal en móviles */
   }
 
   .admin-mobile-header {
@@ -276,24 +280,33 @@ img {
     top: 0;
     left: 0;
     bottom: 0;
-    transform: translateX(-100%); /* Oculto por defecto */
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
+    width: 260px;
+    height: 100vh;
+    z-index: 100; /* Sidebar por encima del backdrop */
+    transform: translateX(-100%); /* Oculto fuera de pantalla */
+    
+    /* Transición suave para la animación de entrada/salida */
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
   }
 
   .admin-sidebar.open {
-    transform: translateX(0); /* Visible al pulsar menú */
+    transform: translateX(0); /* Deslizamiento fluido hacia adentro */
   }
 
+  /* Fondo oscuro nítido sin blur borroso */
   .admin-backdrop.open {
     display: block;
     position: fixed;
     inset: 0;
-    background-color: rgba(15, 23, 42, 0.6);
-    backdrop-filter: blur(2px);
-    z-index: 95;
+    background-color: rgba(15, 23, 42, 0.65);
+    z-index: 95; /* Justo debajo del sidebar (100) */
   }
 
   .admin-main-content {
+    height: auto;
+    overflow-y: visible;
     padding: 1.25rem 1rem;
   }
 }
@@ -476,4 +489,49 @@ button:disabled::before {
   justify-content: center;
   gap: 1.25rem;
   width: 100%;
+}
+
+/* ===================================================
+   MODAL EN PORTAL (PANTALLA COMPLETA + BLUR)
+   =================================================== */
+
+.modal-overlay-portal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  background-color: rgba(15, 23, 42, 0.55) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem !important;
+  z-index: 99999 !important; /* Por encima de cualquier sidebar o header */
+}
+
+.modal-content-portal {
+  background-color: #ffffff;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  animation: scaleUpModal 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scaleUpModal {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

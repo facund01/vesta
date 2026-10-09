@@ -38,9 +38,11 @@ export const Footer = () => {
       }}>
         {/* Columna 1: Identidad Corporativa */}
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', color: '#ffffff' }}>
-            <Building2 size={24} color="#3b82f6" />
-            <span style={{ fontSize: '1.25rem', fontWeight: 800 }}>{company?.nombreComercio || 'Vest Propiedades'}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
+            <div style={{ backgroundColor: '#ffffff', padding: '0.35rem 0.6rem', borderRadius: '8px', display: 'inline-flex' }}>
+              <img src="/logo-card.png" alt="Vesta Logo" style={{ height: '28px', width: 'auto' }} />
+            </div>
+            <span style={{ color: '#ffffff', fontWeight: 700, fontSize: '1.1rem' }}>Vesta Propiedades</span>
           </div>
           <p style={{ fontSize: '0.875rem', lineHeight: '1.6', color: '#94a3b8' }}>
             {company?.descripcion || 'Comercialización y gestión integral de propiedades exclusivas en Buenos Aires con transparencia y asesoramiento profesional.'}

@@ -13,12 +13,14 @@ import { PropertiesPage } from './pages/public/PropertiesPage'
 import { PropertyDetailPage } from './pages/public/PropertyDetailPage'
 import { ContactPage } from './pages/public/ContactPage'
 import { LoginPage } from './pages/public/LoginPage'
+import { ResetPasswordPage } from './pages/public/ResetPasswordPage'
 
 // Páginas Administrativas
 import { DashboardPage } from './pages/admin/DashboardPage'
 import { AdminPropertiesPage } from './pages/admin/AdminPropertiesPage'
 import { AdminCategoriesPage } from './pages/admin/AdminCategoriesPage'
 import { AdminInquiriesPage } from './pages/admin/AdminInquiriesPage'
+import { AdminSettingsPage } from './pages/admin/AdminSettingsPage'
 
 export function App() {
   return (
@@ -33,6 +35,7 @@ export function App() {
             <Route path="/propiedades/:id" element={<PropertyDetailPage />} />
             <Route path="/contacto" element={<ContactPage />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
           </Route>
 
           {/* Rutas Protegidas bajo AdminLayout */}
@@ -42,6 +45,7 @@ export function App() {
               <Route path="/admin/propiedades" element={<AdminPropertiesPage />} />
               <Route path="/admin/categorias" element={<AdminCategoriesPage />} />
               <Route path="/admin/consultas" element={<AdminInquiriesPage />} />
+              <Route path="/admin/configuracion" element={<AdminSettingsPage />} />
             </Route>
           </Route>
 

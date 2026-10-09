@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import {
   getAdminPropertiesRequest,
   getCategoriesRequest,
@@ -15,9 +16,7 @@ import {
   EyeOff, 
   Star, 
   X, 
-  CheckCircle2, 
-  Building2,
-  DollarSign
+  Building2
 } from 'lucide-react'
 import Swal from 'sweetalert2'
 
@@ -154,12 +153,10 @@ export const AdminPropertiesPage = () => {
 
   // Alternar Estado Activo / Pausado
   const handleToggleStatus = async (prop) => {
-    // Detectamos si el backend usa 'activo', 'activa' o 'disponible'
     const estadoActual = prop.activo !== undefined ? prop.activo : (prop.activa !== undefined ? prop.activa : true)
     const nuevoEstado = !estadoActual
 
     try {
-      // Enviamos tanto 'activo' como 'activa' para compatibilidad total con el controlador
       await updatePropertyStatusRequest(prop._id, { activo: nuevoEstado, activa: nuevoEstado })
       
       setProperties((prev) =>
@@ -239,7 +236,9 @@ export const AdminPropertiesPage = () => {
             fontSize: '0.9rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem'
+            gap: '0.5rem',
+            border: 'none',
+            cursor: 'pointer'
           }}
         >
           <Plus size={18} /> Nueva Propiedad
@@ -369,7 +368,8 @@ export const AdminPropertiesPage = () => {
                               color: isActiva ? '#64748b' : '#2563eb',
                               border: '1px solid #e2e8f0',
                               padding: '0.45rem',
-                              borderRadius: '6px'
+                              borderRadius: '6px',
+                              cursor: 'pointer'
                             }}
                           >
                             {isActiva ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -377,14 +377,14 @@ export const AdminPropertiesPage = () => {
                           <button
                             onClick={() => handleOpenEdit(prop)}
                             title="Editar publicación"
-                            style={{ backgroundColor: '#eff6ff', color: '#2563eb', padding: '0.45rem', borderRadius: '6px' }}
+                            style={{ backgroundColor: '#eff6ff', color: '#2563eb', padding: '0.45rem', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
                           >
                             <Edit size={16} />
                           </button>
                           <button
                             onClick={() => handleDelete(prop._id, prop.titulo)}
                             title="Eliminar publicación"
-                            style={{ backgroundColor: '#fee2e2', color: '#dc2626', padding: '0.45rem', borderRadius: '6px' }}
+                            style={{ backgroundColor: '#fee2e2', color: '#dc2626', padding: '0.45rem', borderRadius: '6px', border: 'none', cursor: 'pointer' }}
                           >
                             <Trash2 size={16} />
                           </button>
@@ -399,29 +399,17 @@ export const AdminPropertiesPage = () => {
         </div>
       )}
 
-      {/* MODAL DE CREACIÓN / EDICIÓN */}
-      {modalOpen && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          backgroundColor: 'rgba(15, 23, 42, 0.6)',
-          backdropFilter: 'blur(3px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '1rem',
-          zIndex: 200
-        }}>
-          <div style={{
-            backgroundColor: '#ffffff',
-            borderRadius: '12px',
-            width: '100%',
-            maxWidth: '680px',
-            maxHeight: '90vh',
-            display: 'flex',
-            flexDirection: 'column',
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)'
-          }}>
+      {/* MODAL DE CREACIÓN / EDICIÓN EN PORTAL */}
+      {modalOpen && createPortal(
+        <div 
+          className="modal-overlay-portal" 
+          onClick={() => setModalOpen(false)}
+        >
+          <div 
+            className="modal-content-portal"
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: '680px', maxHeight: '90vh' }}
+          >
             {/* Cabecera Modal */}
             <div style={{
               padding: '1.25rem 1.5rem',
@@ -434,8 +422,9 @@ export const AdminPropertiesPage = () => {
                 {editingId ? 'Editar Propiedad' : 'Nueva Publicación'}
               </h2>
               <button
+                type="button"
                 onClick={() => setModalOpen(false)}
-                style={{ backgroundColor: 'transparent', color: '#64748b' }}
+                style={{ backgroundColor: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer' }}
               >
                 <X size={20} />
               </button>
@@ -466,7 +455,7 @@ export const AdminPropertiesPage = () => {
                     value={formData.tipoOperacion}
                     onChange={(e) => setFormData({ ...formData, tipoOperacion: e.target.value })}
                     className="custom-select"
-                    style={{ padding: '0.65rem 2rem 0.65rem 0.75rem', fontSize: '0.9rem' }}
+                    style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.9rem' }}
                   >
                     <option value="Venta">Venta</option>
                     <option value="Alquiler">Alquiler</option>
@@ -483,7 +472,7 @@ export const AdminPropertiesPage = () => {
                     value={formData.categoria}
                     onChange={(e) => setFormData({ ...formData, categoria: e.target.value })}
                     className="custom-select"
-                    style={{ padding: '0.65rem 2rem 0.65rem 0.75rem', fontSize: '0.9rem' }}
+                    style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.9rem' }}
                   >
                     <option value="">Seleccionar...</option>
                     {categories.map((cat) => (
@@ -502,7 +491,7 @@ export const AdminPropertiesPage = () => {
                     value={formData.moneda}
                     onChange={(e) => setFormData({ ...formData, moneda: e.target.value })}
                     className="custom-select"
-                    style={{ padding: '0.65rem 1.8rem 0.65rem 0.75rem', fontSize: '0.9rem' }}
+                    style={{ width: '100%', padding: '0.65rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.9rem' }}
                   >
                     <option value="USD">USD</option>
                     <option value="ARS">ARS</option>
@@ -614,21 +603,22 @@ export const AdminPropertiesPage = () => {
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: 600, fontSize: '0.9rem' }}
+                  style={{ backgroundColor: '#f1f5f9', border: 'none', color: '#475569', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer' }}
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  style={{ backgroundColor: '#2563eb', color: '#ffffff', padding: '0.65rem 1.5rem', borderRadius: '8px', fontWeight: 700, fontSize: '0.9rem' }}
+                  style={{ backgroundColor: '#2563eb', border: 'none', color: '#ffffff', padding: '0.65rem 1.5rem', borderRadius: '8px', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer' }}
                 >
                   {submitting ? 'Guardando...' : (editingId ? 'Guardar Cambios' : 'Publicar Inmueble')}
                 </button>
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import {
   getCategoriesRequest,
   createCategoryRequest,
@@ -152,7 +153,9 @@ export const AdminCategoriesPage = () => {
             fontSize: '0.9rem',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.5rem'
+            gap: '0.5rem',
+            border: 'none',
+            cursor: 'pointer'
           }}
         >
           <Plus size={18} /> Nueva Categoría
@@ -219,7 +222,9 @@ export const AdminCategoriesPage = () => {
                           backgroundColor: '#eff6ff',
                           color: '#2563eb',
                           padding: '0.45rem',
-                          borderRadius: '6px'
+                          borderRadius: '6px',
+                          border: 'none',
+                          cursor: 'pointer'
                         }}
                       >
                         <Edit size={16} />
@@ -231,7 +236,9 @@ export const AdminCategoriesPage = () => {
                           backgroundColor: '#fee2e2',
                           color: '#dc2626',
                           padding: '0.45rem',
-                          borderRadius: '6px'
+                          borderRadius: '6px',
+                          border: 'none',
+                          cursor: 'pointer'
                         }}
                       >
                         <Trash2 size={16} />
@@ -245,28 +252,16 @@ export const AdminCategoriesPage = () => {
         </div>
       )}
 
-      {/* MODAL CREAR / EDITAR */}
-      {modalOpen && (
-        <div style={{
-          position: 'fixed',
-          inset: 0,
-          backgroundColor: 'rgba(15, 23, 42, 0.6)',
-          backdropFilter: 'blur(3px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '1rem',
-          zIndex: 200
-        }}>
-          <div style={{
-            backgroundColor: '#ffffff',
-            borderRadius: '12px',
-            width: '100%',
-            maxWidth: '480px',
-            display: 'flex',
-            flexDirection: 'column',
-            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)'
-          }}>
+      {/* MODAL CREAR / EDITAR USANDO PORTAL (Escape al body) */}
+      {modalOpen && createPortal(
+        <div 
+          className="modal-overlay-portal" 
+          onClick={() => setModalOpen(false)}
+        >
+          <div 
+            className="modal-content-portal"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div style={{
               padding: '1.25rem 1.5rem',
               borderBottom: '1px solid #e2e8f0',
@@ -278,8 +273,9 @@ export const AdminCategoriesPage = () => {
                 {editingId ? 'Editar Categoría' : 'Nueva Categoría'}
               </h2>
               <button
+                type="button"
                 onClick={() => setModalOpen(false)}
-                style={{ backgroundColor: 'transparent', color: '#64748b' }}
+                style={{ backgroundColor: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer' }}
               >
                 <X size={20} />
               </button>
@@ -317,21 +313,22 @@ export const AdminCategoriesPage = () => {
                 <button
                   type="button"
                   onClick={() => setModalOpen(false)}
-                  style={{ backgroundColor: '#f1f5f9', color: '#475569', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: 600, fontSize: '0.9rem' }}
+                  style={{ backgroundColor: '#f1f5f9', border: 'none', color: '#475569', padding: '0.65rem 1.25rem', borderRadius: '8px', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer' }}
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  style={{ backgroundColor: '#2563eb', color: '#ffffff', padding: '0.65rem 1.5rem', borderRadius: '8px', fontWeight: 700, fontSize: '0.9rem' }}
+                  style={{ backgroundColor: '#2563eb', border: 'none', color: '#ffffff', padding: '0.65rem 1.5rem', borderRadius: '8px', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer' }}
                 >
                   {submitting ? 'Guardando...' : (editingId ? 'Guardar Cambios' : 'Crear Categoría')}
                 </button>
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )

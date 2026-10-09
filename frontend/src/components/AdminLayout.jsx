@@ -5,6 +5,7 @@ import {
   Building2, 
   Tags, 
   MessageSquare, 
+  Settings,
   ExternalLink, 
   LogOut, 
   User,
@@ -114,6 +115,11 @@ export const AdminLayout = () => {
             <span>Consultas</span>
           </NavLink>
 
+          <NavLink to="/admin/configuracion" style={navItemStyle} onClick={handleNavClick}>
+            <Settings size={18} />
+            <span>Configuración</span>
+          </NavLink>
+
           <div style={{ margin: '1rem 0', borderTop: '1px solid #1e293b' }} />
 
           <Link
@@ -181,9 +187,11 @@ export const AdminLayout = () => {
         </div>
       </aside>
 
-      {/* CONTENIDO PRINCIPAL DINÁMICO */}
+      {/* CONTENIDO PRINCIPAL DINÁMICO CON ANIMACIÓN */}
       <main className="admin-main-content">
-        <Outlet />
+        <div key={location.pathname} className="page-transition">
+          <Outlet />
+        </div>
       </main>
     </div>
   )

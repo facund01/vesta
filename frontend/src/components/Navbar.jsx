@@ -31,24 +31,15 @@ export const Navbar = () => {
         gap: '0.75rem'
       }}>
         {/* Logotipo e Identidad */}
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#1e293b' }}>
-          <div style={{
-            background: '#2563eb',
-            color: '#ffffff',
-            padding: '0.45rem',
-            borderRadius: '8px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <Building2 size={22} />
-          </div>
-          <div>
-            <span style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.5px' }}>VESTA</span>
-            <span style={{ fontSize: '0.75rem', display: 'block', color: '#64748b', fontWeight: 600, marginTop: '-3px' }}>
-              PROPIEDADES
-            </span>
-          </div>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none' }}>
+          <img 
+            src="/logo-header.png" 
+            alt="Vesta Propiedades Logo" 
+            style={{ height: '40px', width: 'auto', objectFit: 'contain' }} 
+          />
+          <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.5px' }}>
+            VESTA <span style={{ color: '#2563eb', fontSize: '0.85rem', fontWeight: 600 }}>PROPIEDADES</span>
+          </span>
         </Link>
 
         {/* Enlaces de Navegación Pública (Sin botón buscar propiedades) */}
