@@ -140,7 +140,3 @@ cd vesta
    ```
 
 4. Abrí el enlace proporcionado por Vite (usualmente `http://localhost:5173`) en tu navegador.
-
-## Licencia
-
-Este proyecto se distribuye bajo la licencia MIT.
