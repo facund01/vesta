@@ -1,116 +1,146 @@
-# Vesta Propiedades - Aplicación Web Inmobiliaria
+# Vesta Propiedades
 
-Aplicación web integral para la promoción y administración de propiedades e inmuebles.
-
-El sistema implementa una arquitectura desacoplada basada en una **API REST en NodeJS/Express** y un frontend reactivo en **React**. Cuenta con un sitio público orientado a visitantes y potenciales clientes, junto con un panel de administración privado y protegido para la gestión de publicaciones, categorías, mensajes de contacto e información institucional.
-
----
+Vesta Propiedades es una plataforma web integral diseñada para la gestión y publicación de inmuebles. Ofrece un portal público moderno para visitantes interesados en comprar o alquilar propiedades, junto con un panel de administración privado para la gestión del inventario, categorías de inmuebles y configuraciones institucionales.
 
 ## Características Principales
 
-### Sitio Público (Visitantes)
-* **Catálogo interactivo:** Visualización de propiedades activas con imágenes, precios, descripción y estado de disponibilidad (*Disponible, Reservado, Alquilado, Vendido*).
-* **Búsqueda y filtros dinámicos:** Búsqueda textual por palabras clave/ubicación y filtrado dinámico por categoría de inmueble y tipo de operación (Venta/Alquiler).
-* **Ficha de detalle:** Vista individual con galería de fotos e información técnica.
-* **Formulario de contacto:** Envío y almacenamiento de consultas directas en base de datos asociadas o no a una propiedad específica.
-* **Información institucional:** Visualización de horarios, datos de contacto, dirección y redes sociales del negocio.
+### Portal Público
 
-### Panel de Administración (Backoffice)
-* **Autenticación y perfil:** Registro, inicio de sesión seguro mediante JSON Web Tokens (JWT), recuperación de contraseña y edición de datos personales.
-* **Gestión de propiedades (CRUD):** Creación, edición, eliminación y control de visibilidad (activar/desactivar) de publicaciones.
-* **Gestión de categorías (CRUD):** Alta, baja y modificación de tipos de inmuebles (Casas, Departamentos, Terrenos, Locales).
-* **Bandeja de consultas:** Listado de mensajes recibidos con seguimiento por estados (*Pendiente, Leída, Respondida*).
-* **Administración institucional:** Actualización de la información del comercio en tiempo real.
-* **Dashboard estadístico:** Resumen de métricas clave sobre inmuebles activos y consultas pendientes.
+* **Búsqueda e Inventario:** Exploración de inmuebles por tipo de operación (Venta, Alquiler, Alquiler Temporal) y clasificaciones.
 
----
+* **Detalle de Inmueble:** Ficha técnica con galerías de fotos, precio en moneda local/extranjera, ubicación, métricas y descripción detallada.
 
-## Tecnologías Utilizadas
+* **Formulario de Contacto:** Canal directo para que los clientes envíen consultas sobre inmuebles de su interés.
 
-### Backend
-* **Entorno de ejecución:** Node.js (ES Modules)
-* **Framework web:** Express.js
-* **Base de datos:** MongoDB Atlas (NoSQL)
-* **ODM / Modelado:** Mongoose
-* **Seguridad y autenticación:** JSON Web Tokens (`jsonwebtoken`) y `bcryptjs` para hashing de claves
-* **Validación de entradas:** `express-validator`
-* **Servicio de correo:** `nodemailer`
-* **Manejo de CORS:** `cors`
+* **Sección Institucional:** Información sobre la empresa, ubicación y vías de comunicación cargadas dinámicamente.
 
-### Frontend *(En desarrollo)*
-* **Librería principal:** React (SPA con Vite)
-* **Enrutamiento:** React Router DOM
-* **Cliente HTTP:** Axios
-* **Iconografía:** Lucide React
+### Panel Administrativo
 
----
+* **Métricas y Tablero:** Vista rápida del estado del inventario y consultas recibidas.
 
-## Estructura del Proyecto
+* **Gestión de Propiedades:** Modales interactivos para crear, editar, pausar/activar y eliminar publicaciones. Soporte para destacar inmuebles en la portada.
 
-```text
-vesta/
-├── backend/                  # Servidor de API REST
-│   ├── src/
-│   │   ├── config/           # Conexión a MongoDB Atlas y configuración de servicios
-│   │   ├── controllers/      # Controladores de peticiones HTTP
-│   │   ├── middlewares/      # Middlewares de Auth (JWT), validación y errores
-│   │   ├── models/           # Esquemas de Mongoose (User, Property, Category, etc.)
-│   │   ├── routes/           # Definición de rutas y endpoints de la API
-│   │   ├── seeds/            # Script de inicialización y precarga de datos (20+ items)
-│   │   ├── utils/            # Utilidades (firmado JWT, formateadores)
-│   │   ├── app.js            # Configuración de Express, CORS y middlewares
-│   │   └── server.js         # Arranque del servidor HTTP
-│   ├── .env.example          # Plantilla de variables de entorno
-│   └── package.json          # Dependencias y scripts del backend
-└── frontend/                 # Aplicación cliente en React (Vite)
+* **Gestión de Categorías:** Alta y edición de clasificaciones (Departamentos, Casas, Terrenos, etc.).
+
+* **Atención de Consultas:** Listado y seguimiento de las consultas de clientes ingresadas desde el sitio público.
+
+* **Configuración Institucional:** Administración de datos de contacto, logo, redes sociales e información general de la inmobiliaria.
+
+## Arquitectura y Tecnologías
+
+El proyecto está estructurado bajo una arquitectura **Full Stack desacoplada** compuesta por:
+
+* **Frontend:**
+
+  * **React 18** con **Vite** para desarrollo y compilación rápida.
+
+  * **React Router 6** para el manejo de rutas y layouts protegidos.
+
+  * **React Portals** (`createPortal`) para la renderización de modales en el nivel raíz del DOM.
+
+  * **Lucide React** para iconografía estandarizada.
+
+  * **CSS3 / Flexbox / Grid** con animaciones de transición y diseño responsivo.
+
+* **Backend:**
+
+  * **Node.js** y **Express.js** como motor del servidor y API RESTful.
+
+  * **MongoDB** como base de datos de documentos.
+
+  * **Mongoose** como ODM para modelado de datos.
+
+  * **JWT (JSON Web Tokens)** para autenticación y sesiones seguras en el panel de administración.
+
+  * **CORS** para el intercambio seguro de recursos entre frontend y backend.
+
+## Requisitos Previos
+
+Asegurate de contar con el siguiente software instalado antes de iniciar:
+
+1. **Node.js** (Versión 18.x o superior)
+
+2. **Git**
+
+3. **MongoDB** (Servidor local en puerto `27017` o una cuenta activa en MongoDB Atlas)
+
+## Guía de Instalación Local
+
+### 1. Clonar el Repositorio
+
+```
+git clone https://github.com/facund01/vesta.git
+cd vesta
+
 ```
 
----
+### 2. Configurar e Iniciar el Backend
 
-### Requisitos Previos
-* Node.js v18 o superior instalado.
-* Cuenta en MongoDB Atlas (o instancia local de MongoDB).
-* Git para clonar el repositorio.
+1. Navegá a la carpeta del servidor e instalá las dependencias:
 
----
+   ```
+   cd backend
+   npm install
+   
+   ```
 
-### Instalación y Puesta en Marcha (Backend)
-1. Clonar el repositorio y acceder a la carpeta del backend:
-```
-git clone <URL_DEL_REPOSITORIO>
-cd vesta/backend
-```
-2. Instalar dependencias:
-```
-npm install
-```
-3. Configurar variables de entorno: Copiar el archivo ```.env.example``` a ```.env```:
-```
-cp .env.example .env
-```
-Completar las variables requeridas:
-```
-PORT=5000
-NODE_ENV=development
-MONGO_URI=mongodb+srv://<usuario>:<password>@cluster0.mongodb.net/vesta_db?retryWrites=true&w=majority
-JWT_SECRET=tu_clave_secreta_jwt
-JWT_EXPIRES_IN=7d
-CLIENT_URL=http://localhost:5173
-```
-4. Ejecutar el servidor en modo desarrollo:
-```
-npm run dev
-```
-El servidor estará escuchando en http://localhost:5000 con recarga automática ante cambios.
+2. Creá un archivo `.env` en la raíz de la carpeta `backend`:
 
----
+   ```
+   PORT=5000
+   MONGO_URI=mongodb://localhost:27017/vesta_db
+   JWT_SECRET=supersecret
+   
+   ```
 
-### Documentación de la API
-Los endpoints principales se encuentran agrupados bajo el prefijo ```/api/v1```:
-* **Autenticación:** ```/api/v1/auth``` (```/register```, ```/login```, ```/profile```, ```/forgot-password```)
+3. Ejecutá el script de *seed* para cargar la base de datos inicial (categorías, inmuebles de demostración y la cuenta de administrador):
 
-* **Propiedades:** ```/api/v1/properties``` (CRUD público y administrativo)
-* **Categorías:** ```/api/v1/categories``` (CRUD de tipos de propiedad)
-* **Consultas:** ```/api/v1/inquiries``` (Recepción y gestión de mensajes)
-* **Información Institucional:** ```/api/v1/company``` (Datos del comercio)
-* **Estadísticas:** ```/api/v1/stats``` (Métricas del dashboard administrativo)
+   ```
+   npm run seed
+   
+   ```
+
+   > **Credenciales de Administrador creadas por defecto:**
+   >
+   > * **Email:** `admin@vesta.com`
+   >
+   > * **Contraseña:** `Password123!`
+
+4. Iniciá el servidor en modo desarrollo:
+
+   ```
+   npm run dev
+   
+   ```
+
+   *El servidor quedará escuchando en `http://localhost:5000`.*
+
+### 3. Configurar e Iniciar el Frontend
+
+1. En una nueva ventana de terminal, navegá a la carpeta del cliente:
+
+   ```
+   cd vesta/frontend
+   npm install
+   
+   ```
+
+2. Creá un archivo `.env` en la raíz de la carpeta `frontend`:
+
+   ```
+   VITE_API_URL=http://localhost:5000/api/v1
+   
+   ```
+
+3. Iniciá el entorno de desarrollo:
+
+   ```
+   npm run dev
+   
+   ```
+
+4. Abrí el enlace proporcionado por Vite (usualmente `http://localhost:5173`) en tu navegador.
+
+## Licencia
+
+Este proyecto se distribuye bajo la licencia MIT.
